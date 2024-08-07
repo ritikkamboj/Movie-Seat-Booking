@@ -15,6 +15,11 @@ let moviePrice = +movie.value;
 function updateSelecteData() {
   const selectedSeats = document.querySelectorAll(".row .seat.selected");
   console.log(selectedSeats);
+  // console.log([...selectedSeats]);
+  const seatsIndex = [...selectedSeats].map((seat) => [...seats].indexOf(seat));
+  console.log(seatsIndex);
+
+  localStorage.setItem('seats', JSON.stringify(seatsIndex));
 
   let numbers = selectedSeats.length;
   count.innerText = numbers;
@@ -23,8 +28,17 @@ function updateSelecteData() {
   // console.log(movie)
 }
 
+function setMovieData(selectedIndex , moviePrice)
+{
+  localStorage.setItem('movieIndex',JSON.stringify(selectedIndex))
+  localStorage.setItem('movieCost',JSON.stringify(+moviePrice));
+}
+
 movie.addEventListener("change", (e) => {
   console.log(e.target.value);
+  // console.log(e.target)
+  console.log(e.target.selectedIndex , e.target.value);
+ setMovieData(e.target.selectedIndex, e.target.value)
   moviePrice = e.target.value;
 
   updateSelecteData();
@@ -41,3 +55,6 @@ container.addEventListener("click", (e) => {
     updateSelecteData();
   }
 });
+
+
+// when we want to restrore the previous state we have to the save th eseats which we selected and also the movie and the cost of the movie ticket 
